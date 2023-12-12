@@ -19,7 +19,7 @@ Feature: Login App
   Scenario: special login
     When I login in
       | username | password |
-      | Admin    | admin1123 |
+      | Admin    | admin123 |
     And I press login button
     Then I am able to successfully login to the Website
 
