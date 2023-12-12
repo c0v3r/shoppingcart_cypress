@@ -49,3 +49,4 @@ publickey.pem
 cypress/reports
 cucumber-messages.ndjson
 cypress/videos
+cypress/screenshots
