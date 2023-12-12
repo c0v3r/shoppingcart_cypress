@@ -1,0 +1,36 @@
+{
+  "name": "cypress_typescript_cucumber2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run",
+    "preprod": "npx cypress run --config-file=preprod.config.ts --env ENV=qa,TAGS=@smoke",
+    "qa": "npx cypress run --config-file=qa.config.ts --env ENV=qa,TAGS=@smoke",
+    "qa2": "npx cypress run --env ENV=qa,TAGS=@smoke",
+    "cy:qa3": "npx cypress run --env ENV=qa,TAGS=@smoke2 && node generate-cucumber-html-reporter.js",
+    "run:docker:compose":"docker-compose run e2e2",
+    "e2e:chrome":"npx cypress run --browser chrome --headless",
+    "e2e:firefox":"npx cypress run --browser firefox --headless"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^19.1.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "cypress": "^13.5.0",
+    "multiple-cucumber-html-reporter": "^3.5.0",
+    "typescript": "^5.2.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/e2e/step_definitions/*.ts",
+    "filterSpecs": true,
+    "omitFiltered": true,
+    "json": {
+      "enabled": true,
+      "formatter": "cucumber-json-formatter",
+      "output": "cypress/reports/json/cucumber-report.json"
+   }
+  }
+}

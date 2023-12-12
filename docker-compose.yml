@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npx cypress open
+    environment:
+      - DISPLAY=novnc:0
+    working_dir: /herTest
+    volumes:
+      - ./cypress/videos:/herTest/cypress/videos
+      - ./cypress/reports:/herTest/cypress/reports
+      - ./cypress/screenshots:/herTest/cypress/screenshots
+    depends_on:
+      - novnc
+    networks:
+      - x11
+
+  novnc:
+    image: theasp/novnc:latest
+    environment:
+      # Adjust to your screen size
+      - DISPLAY_WIDTH=1600
+      - DISPLAY_HEIGHT=968
+      - RUN_XTERM=no
+    ports:
+      - 8080:8080
+      - 5900:5900
+    networks:
+      - x11
+  
+  e2e2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npx cypress run --env ENV=qa,TAGS=@smoke2 && node generate-cucumber-html-reporter.js 
+    volumes:
+      - ./cypress/videos:/herTest/cypress/videos
+      - ./cypress/reports:/herTest/cypress/reports
+      - ./cypress/screenshots:/herTest/cypress/screenshots
+networks:
+  x11:
